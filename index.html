@@ -13,13 +13,24 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 </head>
-<body>
+<body class="container">
 
-	<form id="register-form">
-		<input id="user-name">
-		<input id="password" type="password">
-		<input value="Log In" type="submit">
+	<div class="page-header">
+  	<h1>Graceful Chess &#9813;</h1>
+	</div>
+
+	<form id="register-form" action="none">
+		<div class="form-group">
+			<input id="user-name" class="form-control" placeholder="Username">
+		</div>
+		<div class="form-group">
+			<input id="password" type="password" class="form-control" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<input value="Log In" type="submit" class="btn btn-default">
+		</div>
 	</form>
+
 	<script src="//www.parsecdn.com/js/parse-1.2.16.min.js"></script>
 	<script src="vendor/jquery.js"></script>
 	<script src="vendor/chess.js"></script>
