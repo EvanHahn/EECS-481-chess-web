@@ -16,19 +16,24 @@
 <body class="container">
 
 	<div class="page-header">
+  	<a href="#" id="log-out" class="pull-right">Log out</a>
   	<h1>Graceful Chess &#9813;</h1>
 	</div>
 
 	<form id="register-form" action="none" class="activity">
+
+		<div class="alert alert-danger">Failed to log in.</div>
+
 		<div class="form-group">
-			<input id="user-name" class="form-control" placeholder="Username">
+			<input name="username" required class="form-control" placeholder="Username">
 		</div>
 		<div class="form-group">
-			<input id="password" type="password" class="form-control" placeholder="Password">
+			<input name="password" required type="password" class="form-control" placeholder="Password">
 		</div>
 		<div class="form-group">
 			<input value="Log In" type="submit" class="btn btn-default">
 		</div>
+
 	</form>
 
 	<ul id="game-list" class="activity">
@@ -42,6 +47,7 @@
 
 	<script src="//www.parsecdn.com/js/parse-1.2.16.min.js"></script>
 	<script src="vendor/jquery.js"></script>
+	<script src="vendor/jquery.serializeobject.js"></script>
 	<script src="vendor/chess.js"></script>
 	<script src="vendor/chessboard.js"></script>
 
