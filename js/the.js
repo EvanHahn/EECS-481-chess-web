@@ -17,9 +17,28 @@ function showRegister() {
 }
 
 function showGameList(user) {
+
 	$activities.hide();
 	$logOut.show();
 	$gameList.show();
+
+	var username = user.get('username');
+
+	var player1Query = new Parse.Query('Games');
+	player1Query.equalTo('player1Name', username);
+	var player2Query = new Parse.Query('Games');
+	player2Query.equalTo('player2Name', username);
+	var query = Parse.Query.or(player1Query, player2Query);
+	query.find({
+		success: function(results) {
+			console.log(results);
+		},
+		error: function(error) {
+			alert('Error refreshing games. Please try refreshing.');
+			console.error(error);
+		}
+	});
+
 }
 
 $registerForm.on('submit', function(event) {
