@@ -36,14 +36,18 @@
 
 	</form>
 
-	<ul id="game-list" class="activity">
+	<div id="game-list" class="activity">
 
-		<li><a href="#">Your turn against Jake</a></li>
-		<li><a href="#">Your turn against Laura</a></li>
-		<li><a href="#">Your turn against Evan</a></li>
-		<li><a href="#">Bob's turn against you</a></li>
+		<h3>Your turn games</h3>
+		<ul id="your-turn-games"></ul>
 
-	</ul>
+		<h3>Their turn games</h3>
+		<ul id="their-turn-games"></ul>
+
+		<h3>Finished games</h3>
+		<ul id="finished-games"></ul>
+
+	</div>
 
 	<script src="//www.parsecdn.com/js/parse-1.2.16.min.js"></script>
 	<script src="vendor/jquery.js"></script>
@@ -51,6 +55,7 @@
 	<script src="vendor/chess.js"></script>
 	<script src="vendor/chessboard.js"></script>
 
+	<script src="js/game.js"></script>
 	<script src="js/the.js"></script>
 
 </body>
