@@ -3,13 +3,17 @@
 Parse.initialize('4SV3X5Flt3tqhr87pM29xI36jKYtUWnZWBBI70iH', 'CuVq6V6rVsXC2ud1lGl9U8qStG2zVNySqPktbk35');
 
 var $activities = $('.activity');
+var $logOut = $('#log-out');
+
 var $registerForm = $('#register-form');
 var $registerFormAlert = $('.alert', $registerForm);
+
 var $gameList = $('#game-list');
 var $yourTurnGamesList = $('#your-turn-games');
 var $theirTurnGamesList = $('#their-turn-games');
 var $finishedGamesList = $('#finished-games');
-var $logOut = $('#log-out');
+
+var $boardActivity = $('#board-activity');
 
 function showRegister() {
 	console.assert(!Parse.User.current());
@@ -24,6 +28,10 @@ function showGameList(user) {
 	$activities.hide();
 	$logOut.show();
 	$gameList.show();
+
+	$yourTurnGamesList.html('');
+	$theirTurnGamesList.html('');
+	$finishedGamesList.html('');
 
 	var username = user.get('username');
 
@@ -42,7 +50,7 @@ function showGameList(user) {
 				$link.text('Versus ' + game.otherPlayerName());
 				$link.on('click', function(event) {
 					event.preventDefault();
-					console.log(game.id);
+					showGame(game);
 				});
 
 				$bullet.append($link);
@@ -60,6 +68,34 @@ function showGameList(user) {
 		error: function(error) {
 			alert('Error refreshing games. Please try refreshing.');
 			console.error(error);
+		}
+	});
+
+}
+
+function showGame(game) {
+
+	$activities.hide();
+	$boardActivity.show();
+
+	var board = new ChessBoard('board', {
+		position: game.get('gameHistory'),
+		draggable: game.isMyTurn(),
+		onDragStart: function(source, piece) {
+			if (game.isOver() || !game.isMyTurn())
+				return false;
+		},
+		onDrop: function(source, target) {
+			var move = game.move({
+				from: source,
+				to: target,
+				promotion: 'q'
+			});
+			if (!move)
+				return 'snapback';
+		},
+		onSnapEnd: function() {
+			board.position(game.get('gameHistory'));
 		}
 	});
 
@@ -91,9 +127,11 @@ $logOut.on('click', function(event) {
 });
 
 $(document).on('ready', function() {
+
 	var currentUser = Parse.User.current();
 	if (currentUser)
 		showGameList(currentUser);
 	else
 		showRegister();
+
 });

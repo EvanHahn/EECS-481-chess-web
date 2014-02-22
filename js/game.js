@@ -23,6 +23,13 @@ var Games = Parse.Object.extend('Games', {
 
 	isOver: function() {
 		return this.get('gameStatus') == 'gameover';
+	},
+
+	move: function() {
+		var chessJSGame = new Chess(this.get('gameHistory'));
+		var result = chessJSGame.move.apply(this, arguments);
+		this.set('gameHistory', chessJSGame.fen());
+		return result;
 	}
 
 });
