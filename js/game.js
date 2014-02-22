@@ -1,4 +1,4 @@
-/* jshint unused: false */
+/* exported Games */
 /* global Parse */
 
 var Games = Parse.Object.extend('Games', {
