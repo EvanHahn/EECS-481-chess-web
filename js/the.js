@@ -7,6 +7,8 @@ var $logOut = $('#log-out');
 
 var $registerForm = $('#register-form');
 var $registerFormAlert = $('.alert', $registerForm);
+var $usernameInput = $('input[name="username"]');
+var $passwordInput = $('input[name="password"]');
 
 var $gameList = $('#game-list');
 var $yourTurnGamesList = $('#your-turn-games');
@@ -19,6 +21,8 @@ function showRegister() {
 	console.assert(!Parse.User.current());
 	$activities.hide();
 	$logOut.hide();
+	$usernameInput.val('');
+	$passwordInput.val('');
 	$registerFormAlert.hide();
 	$registerForm.show();
 }
@@ -105,9 +109,8 @@ $registerForm.on('submit', function(event) {
 
 	event.preventDefault();
 
-	var form = $(this).serializeObject();
-	var username = form.username;
-	var password = form.password;
+	var username = $usernameInput.val();
+	var password = $passwordInput.val();
 
 	Parse.User.logIn(username, password, {
 		success: function(user) {
