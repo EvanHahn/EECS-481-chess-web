@@ -1,5 +1,5 @@
 /* exported Games */
-/* global Parse */
+/* global Parse, Chess */
 
 var Games = Parse.Object.extend('Games', {
 

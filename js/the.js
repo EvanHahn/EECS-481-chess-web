@@ -1,4 +1,4 @@
-/* global Parse */
+/* global Parse, ChessBoard */
 
 Parse.initialize('4SV3X5Flt3tqhr87pM29xI36jKYtUWnZWBBI70iH', 'CuVq6V6rVsXC2ud1lGl9U8qStG2zVNySqPktbk35');
 
@@ -21,6 +21,34 @@ function showRegister() {
 	$logOut.hide();
 	$registerFormAlert.hide();
 	$registerForm.show();
+}
+
+function showGame(game) {
+
+	$activities.hide();
+	$boardActivity.show();
+
+	var board = new ChessBoard('board', {
+		position: game.get('gameHistory'),
+		draggable: game.isMyTurn(),
+		onDragStart: function() {
+			if (game.isOver() || !game.isMyTurn())
+				return false;
+		},
+		onDrop: function(source, target) {
+			var move = game.move({
+				from: source,
+				to: target,
+				promotion: 'q'
+			});
+			if (!move)
+				return 'snapback';
+		},
+		onSnapEnd: function() {
+			board.position(game.get('gameHistory'));
+		}
+	});
+
 }
 
 function showGameList(user) {
@@ -73,34 +101,6 @@ function showGameList(user) {
 
 }
 
-function showGame(game) {
-
-	$activities.hide();
-	$boardActivity.show();
-
-	var board = new ChessBoard('board', {
-		position: game.get('gameHistory'),
-		draggable: game.isMyTurn(),
-		onDragStart: function(source, piece) {
-			if (game.isOver() || !game.isMyTurn())
-				return false;
-		},
-		onDrop: function(source, target) {
-			var move = game.move({
-				from: source,
-				to: target,
-				promotion: 'q'
-			});
-			if (!move)
-				return 'snapback';
-		},
-		onSnapEnd: function() {
-			board.position(game.get('gameHistory'));
-		}
-	});
-
-}
-
 $registerForm.on('submit', function(event) {
 
 	event.preventDefault();
@@ -127,11 +127,9 @@ $logOut.on('click', function(event) {
 });
 
 $(document).on('ready', function() {
-
 	var currentUser = Parse.User.current();
 	if (currentUser)
 		showGameList(currentUser);
 	else
 		showRegister();
-
 });
