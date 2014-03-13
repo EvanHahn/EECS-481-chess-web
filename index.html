@@ -17,7 +17,7 @@
 
 	<div class="page-header">
   	<a href="#" id="log-out" class="pull-right">Log out</a>
-    <a href="#" id="register" class="">Register</a>
+    <a href="#" id="sign-up" class="pull-right">Sign Up</a>
   	<h1>Graceful Chess &#9813;</h1>
 	</div>
 
@@ -33,6 +33,22 @@
 		</div>
 		<div class="form-group">
 			<input value="Log In" type="submit" class="btn btn-default">
+		</div>
+
+	</form>
+    
+    <form id="signup-form" action="none" class="activity">
+
+		<div class="alert alert-danger">Failed to Create Account. Try new username</div>
+
+		<div class="form-group">
+			<input name="username2" required class="form-control" placeholder="Username">
+		</div>
+		<div class="form-group">  
+			<input name="password2" required type="password" class="form-control" placeholder="Password">
+		</div>
+		<div class="form-group">
+			<input value="Create Account" type="submit" class="btn btn-default">
 		</div>
 
 	</form>

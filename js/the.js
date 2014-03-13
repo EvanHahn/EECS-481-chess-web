@@ -4,12 +4,17 @@ Parse.initialize('4SV3X5Flt3tqhr87pM29xI36jKYtUWnZWBBI70iH', 'CuVq6V6rVsXC2ud1lG
 
 var $activities = $('.activity');
 var $logOut = $('#log-out');
-var $register-account = $('#register');
+var $signUp = $('#sign-up');
 
 var $registerForm = $('#register-form');
 var $registerFormAlert = $('.alert', $registerForm);
+var $signUpForm = $('#signup-form');
+var $signUpFormAlert = $('.alert', $signUpForm);
 var $usernameInput = $('input[name="username"]');
 var $passwordInput = $('input[name="password"]');
+
+var $usernameInput2 = $('input[name="username2"]');
+var $passwordInput2 = $('input[name="password2"]');
 
 var $gameList = $('#game-list');
 var $yourTurnGamesList = $('#your-turn-games');
@@ -17,9 +22,6 @@ var $theirTurnGamesList = $('#their-turn-games');
 var $finishedGamesList = $('#finished-games');
 
 var $boardActivity = $('#board-activity');
-
-var $newGameModal = $('.newgame.modal');
-var $opponentName = $('#opponent-name');
 
 function showRegister() {
 	console.assert(!Parse.User.current());
@@ -29,10 +31,12 @@ function showRegister() {
 	$passwordInput.val('');
 	$registerFormAlert.hide();
 	$registerForm.show();
+    $signUp.show();
+    $signUpForm.hide();
 }
 
 function showGame(game) {
-
+    
 	$activities.hide();
 	$boardActivity.show();
 
@@ -64,6 +68,7 @@ function showGameList(user) {
 	$activities.hide();
 	$logOut.show();
 	$gameList.show();
+    $signUp.hide();
 
 	$yourTurnGamesList.html('');
 	$theirTurnGamesList.html('');
@@ -127,38 +132,39 @@ $registerForm.on('submit', function(event) {
 
 });
 
+$signUpForm.on('submit', function(event) {
+
+	event.preventDefault();
+
+    var user = new Parse.User();
+    user.set("username", $usernameInput2.val());
+    user.set("password", $passwordInput2.val());
+    
+    user.signUp(null, {
+        success: function(user) {
+            showGameList(user);
+        },
+        error: function(user, error) {
+        // Show the error messa ge somewhere and let the user try again.
+            $signUpFormAlert.show();
+        }
+    });
+
+});
+
 $logOut.on('click', function(event) {
 	event.preventDefault();
 	Parse.User.logOut();
 	showRegister();
 });
 
-$newGameModal.on('submit', function(event) {
-
+$signUp.on('click', function(event) {
 	event.preventDefault();
-
-	var me = Parse.User.current().get('username');
-	var opponent = $opponentName.val();
-
-	var game = new Games();
-	game.set({
-		gameHistory: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-		gameStatus: me,
-		player1Name: me,
-		player2Name: opponent
-	});
-
-	game.save(null, {
-		success: function(game) {
-			showGame(game);
-			$newGameModal.modal('hide');
-			$opponentName.val('');
-		},
-		error: function(game, error) {
-			alert('Error starting new game: ' + error.description);
-		}
-	});
-
+//	Parse.User.logOut();
+	showRegister();
+    $activities.hide();
+    $signUpForm.show();
+    $signUpFormAlert.hide();
 });
 
 $(document).on('ready', function() {
