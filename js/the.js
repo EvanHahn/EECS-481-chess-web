@@ -48,8 +48,15 @@ function showGame(game) {
 				to: target,
 				promotion: 'q'
 			});
+			board.draggable = game.isMyTurn();
 			if (!move)
 				return 'snapback';
+			game.save(null, {
+				success: $.noop,
+				error: function(game, error) {
+					alert('Error making move. Try again!');
+				}
+			});
 		},
 		onSnapEnd: function() {
 			board.position(game.get('gameHistory'));

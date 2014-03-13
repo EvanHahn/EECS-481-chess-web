@@ -28,7 +28,16 @@ var Games = Parse.Object.extend('Games', {
 	move: function() {
 		var chessJSGame = new Chess(this.get('gameHistory'));
 		var result = chessJSGame.move.apply(this, arguments);
-		this.set('gameHistory', chessJSGame.fen());
+		if (result) { // is the move valid?
+			this.set('gameHistory', chessJSGame.fen());
+			if (chessJSGame.game_over()) {
+				this.set('gameStatus', 'gameover');
+			} else if (this.get('gameStatus') == this.get('player1Name')) {
+				this.set('gameStatus', this.get('player2Name'));
+			} else {
+				this.set('gameStatus', this.get('player1Name'));
+			}
+		}
 		return result;
 	}
 
