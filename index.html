@@ -39,6 +39,8 @@
 
 	<div id="game-list" class="activity">
 
+		<button data-toggle="modal" data-target=".newgame.modal" id="new-game-button" class="btn btn-primary">New game</button>
+
 		<h3>Your turn games</h3>
 		<ul id="your-turn-games"></ul>
 
@@ -51,13 +53,33 @@
 	</div>
 
 	<div id="board-activity" class="activity">
-
 		<div id="board"></div>
-
 	</div>
+
+	<form class="newgame modal fade"  tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">New game</h4>
+				</div>
+
+				<div class="modal-body form-group">
+					<input placeholder="Enter opponent's username..." id="opponent-name" class="form-control">
+				</div>
+
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" value="New game">
+				</div>
+
+			</div>
+		</div>
+	</form>
 
 	<script src="//www.parsecdn.com/js/parse-1.2.16.min.js"></script>
 	<script src="vendor/jquery.js"></script>
+	<script src="vendor/bootstrap.js"></script>
 	<script src="vendor/chess.js"></script>
 	<script src="vendor/chessboard.js"></script>
 
