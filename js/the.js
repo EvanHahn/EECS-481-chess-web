@@ -1,4 +1,4 @@
-/* global Parse, ChessBoard */
+/* global Parse, ChessBoard, Games */
 
 Parse.initialize('4SV3X5Flt3tqhr87pM29xI36jKYtUWnZWBBI70iH', 'CuVq6V6rVsXC2ud1lGl9U8qStG2zVNySqPktbk35');
 
@@ -23,6 +23,9 @@ var $finishedGamesList = $('#finished-games');
 
 var $boardActivity = $('#board-activity');
 
+var $newGameModal = $('.newgame.modal');
+var $opponentName = $('#opponent-name');
+
 function showRegister() {
 	console.assert(!Parse.User.current());
 	$activities.hide();
@@ -36,7 +39,7 @@ function showRegister() {
 }
 
 function showGame(game) {
-    
+
 	$activities.hide();
 	$boardActivity.show();
 
@@ -58,7 +61,7 @@ function showGame(game) {
 				return 'snapback';
 			game.save(null, {
 				success: $.noop,
-				error: function(game, error) {
+				error: function() {
 					alert('Error making move. Try again!');
 				}
 			});
@@ -144,15 +147,15 @@ $signUpForm.on('submit', function(event) {
 	event.preventDefault();
 
     var user = new Parse.User();
-    user.set("username", $usernameInput2.val());
-    user.set("password", $passwordInput2.val());
-    
+    user.set('username', $usernameInput2.val());
+    user.set('password', $passwordInput2.val());
+
     user.signUp(null, {
         success: function(user) {
             showGameList(user);
         },
-        error: function(user, error) {
-        // Show the error messa ge somewhere and let the user try again.
+        error: function() {
+        // Show the error message somewhere and let the user try again.
             $signUpFormAlert.show();
         }
     });
@@ -172,6 +175,34 @@ $signUp.on('click', function(event) {
     $activities.hide();
     $signUpForm.show();
     $signUpFormAlert.hide();
+});
+
+$newGameModal.on('submit', function(event) {
+
+	event.preventDefault();
+
+	var me = Parse.User.current().get('username');
+	var opponent = $opponentName.val();
+
+  var game = new Games();
+  game.set({
+    gameHistory: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+    gameStatus: me,
+    player1Name: me,
+    player2Name: opponent
+  });
+
+  game.save(null, {
+    success: function(game) {
+      showGame(game);
+      $newGameModal.modal('hide');
+      $opponentName.val('');
+    },
+    error: function(game, error) {
+      alert('Error starting new game: ' + error.description);
+    }
+  });
+
 });
 
 $(document).on('ready', function() {
