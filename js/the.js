@@ -17,6 +17,9 @@ var $finishedGamesList = $('#finished-games');
 
 var $boardActivity = $('#board-activity');
 
+var $newGameModal = $('.newgame.modal');
+var $opponentName = $('#opponent-name');
+
 function showRegister() {
 	console.assert(!Parse.User.current());
 	$activities.hide();
@@ -127,6 +130,34 @@ $logOut.on('click', function(event) {
 	event.preventDefault();
 	Parse.User.logOut();
 	showRegister();
+});
+
+$newGameModal.on('submit', function(event) {
+
+	event.preventDefault();
+
+	var me = Parse.User.current().get('username');
+	var opponent = $opponentName.val();
+
+	var game = new Games();
+	game.set({
+		gameHistory: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+		gameStatus: me,
+		player1Name: me,
+		player2Name: opponent
+	});
+
+	game.save(null, {
+		success: function(game) {
+			showGame(game);
+			$newGameModal.modal('hide');
+			$opponentName.val('');
+		},
+		error: function(game, error) {
+			alert('Error starting new game: ' + error.description);
+		}
+	});
+
 });
 
 $(document).on('ready', function() {
