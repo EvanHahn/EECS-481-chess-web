@@ -26,6 +26,8 @@ var $boardActivity = $('#board-activity');
 var $newGameModal = $('.newgame.modal');
 var $opponentName = $('#opponent-name');
 
+var $backButton = $('#backBtn');
+
 function showRegister() {
 	console.assert(!Parse.User.current());
 	$activities.hide();
@@ -177,6 +179,7 @@ $signUp.on('click', function(event) {
     $signUpFormAlert.hide();
 });
 
+
 $newGameModal.on('submit', function(event) {
 
 	event.preventDefault();
@@ -203,6 +206,12 @@ $newGameModal.on('submit', function(event) {
     }
   });
 
+});
+
+$backButton.on('click', function(event) {
+	event.preventDefault();
+    var currentUser = Parse.User.current();
+    showGameList(currentUser);
 });
 
 $(document).on('ready', function() {
