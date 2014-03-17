@@ -5,6 +5,7 @@ Parse.initialize('4SV3X5Flt3tqhr87pM29xI36jKYtUWnZWBBI70iH', 'CuVq6V6rVsXC2ud1lG
 var $activities = $('.activity');
 var $logOut = $('#log-out');
 var $signUp = $('#sign-up');
+var $logIn = $('#log-in');
 
 var $registerForm = $('#register-form');
 var $registerFormAlert = $('.alert', $registerForm);
@@ -38,6 +39,7 @@ function showRegister() {
 	$registerForm.show();
     $signUp.show();
     $signUpForm.hide();
+    $logIn.hide();
 }
 
 function showGame(game) {
@@ -170,6 +172,11 @@ $logOut.on('click', function(event) {
 	showRegister();
 });
 
+$logIn.on('click', function(event) {
+	event.preventDefault();
+	showRegister();
+});
+
 $signUp.on('click', function(event) {
 	event.preventDefault();
 //	Parse.User.logOut();
@@ -177,6 +184,8 @@ $signUp.on('click', function(event) {
     $activities.hide();
     $signUpForm.show();
     $signUpFormAlert.hide();
+    $logIn.show();
+    $signUp.hide();
 });
 
 
