@@ -28,6 +28,9 @@ var $newGameModal = $('.newgame.modal');
 var $opponentName = $('#opponent-name');
 
 var $backButton = $('#backBtn');
+var $flipButton = $('#flipBtn');
+
+var $board = null;
 
 function showRegister() {
 	console.assert(!Parse.User.current());
@@ -47,7 +50,7 @@ function showGame(game) {
 	$activities.hide();
 	$boardActivity.show();
 
-	var board = new ChessBoard('board', {
+	$board = new ChessBoard('board', {
 		position: game.get('gameHistory'),
 		draggable: game.isMyTurn(),
 		onDragStart: function() {
@@ -60,7 +63,7 @@ function showGame(game) {
 				to: target,
 				promotion: 'q'
 			});
-			board.draggable = game.isMyTurn();
+			$board.draggable = game.isMyTurn();
 			if (!move)
 				return 'snapback';
 			game.save(null, {
@@ -71,7 +74,7 @@ function showGame(game) {
 			});
 		},
 		onSnapEnd: function() {
-			board.position(game.get('gameHistory'));
+			$board.position(game.get('gameHistory'));
 		}
 	});
 
@@ -83,6 +86,7 @@ function showGameList(user) {
 	$logOut.show();
 	$gameList.show();
     $signUp.hide();
+    $logIn.hide();
 
 	$yourTurnGamesList.html('');
 	$theirTurnGamesList.html('');
@@ -222,6 +226,12 @@ $backButton.on('click', function(event) {
     var currentUser = Parse.User.current();
     showGameList(currentUser);
 });
+
+$flipButton.on('click', function(event) {
+    event.preventDefault();
+    $board.flip();
+});
+
 
 $(document).on('ready', function() {
 	var currentUser = Parse.User.current();
