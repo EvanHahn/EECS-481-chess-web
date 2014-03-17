@@ -31,6 +31,7 @@ var $backButton = $('#backBtn');
 var $flipButton = $('#flipBtn');
 
 var $board = null;
+var $statusEl = $('#status');
 
 function showRegister() {
 	console.assert(!Parse.User.current());
@@ -46,10 +47,10 @@ function showRegister() {
 }
 
 function showGame(game) {
-
 	$activities.hide();
 	$boardActivity.show();
-
+    updateStatus(game);
+    
 	$board = new ChessBoard('board', {
 		position: game.get('gameHistory'),
 		draggable: game.isMyTurn(),
@@ -72,6 +73,7 @@ function showGame(game) {
 					alert('Error making move. Try again!');
 				}
 			});
+            updateStatus(game);
 		},
 		onSnapEnd: function() {
 			$board.position(game.get('gameHistory'));
@@ -132,6 +134,41 @@ function showGameList(user) {
 
 }
 
+function updateStatus(game) {
+    var status = '';
+    var playerName = '';
+    if (game.isMyTurn() === true) {
+        playerName = Parse.User.current().get('username');
+      }
+    else {
+        playerName = game.otherPlayerName();
+    }
+    
+      // checkmate?
+//      if (game.in_checkmate() === true) {
+//        status = 'Game over, ' + playerName + ' is in checkmate.';
+//      }
+//      // draw?
+//      else if (game.in_draw() === true) {
+//        status = 'Game over, drawn position';
+//      }
+//      // game still on
+//      else {
+//        status = playerName + ' to move';
+//        // check?
+//        if (game.in_check() === true) {
+//          status += ', ' + playerName + ' is in check';
+//        }
+//      }
+    status = 'It is ' + playerName + '\'s turn to move';
+    
+    if (game.isOver() === true){
+        status = 'Game is over'
+    }
+    
+    $statusEl.html(status);
+}
+      
 $registerForm.on('submit', function(event) {
 
 	event.preventDefault();
@@ -147,8 +184,8 @@ $registerForm.on('submit', function(event) {
 			$registerFormAlert.show();
 		}
 	});
-
 });
+
 
 $signUpForm.on('submit', function(event) {
 
@@ -167,7 +204,8 @@ $signUpForm.on('submit', function(event) {
             $signUpFormAlert.show();
         }
     });
-
+    
+    $usernameInput = $usernameInput2;
 });
 
 $logOut.on('click', function(event) {
