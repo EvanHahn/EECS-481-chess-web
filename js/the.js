@@ -83,7 +83,6 @@ function showGame(game) {
 }
 
 function showGameList(user) {
-
 	$activities.hide();
 	$logOut.show();
 	$gameList.show();
@@ -168,11 +167,10 @@ function updateStatus(game) {
     
     $statusEl.html(status);
 }
-      
+
 $registerForm.on('submit', function(event) {
 
 	event.preventDefault();
-
 	var username = $usernameInput.val();
 	var password = $passwordInput.val();
 
@@ -180,12 +178,15 @@ $registerForm.on('submit', function(event) {
 		success: function(user) {
 			showGameList(user);
 		},
-		error: function() {
+		error: function(user, error) {
+            var status = '';
+            status = "Error: " + error.code + " " + error.message;
+            $registerFormAlert.html(status);
 			$registerFormAlert.show();
+            
 		}
 	});
 });
-
 
 $signUpForm.on('submit', function(event) {
 
@@ -197,15 +198,17 @@ $signUpForm.on('submit', function(event) {
 
     user.signUp(null, {
         success: function(user) {
+            $usernameInput = $usernameInput2;
             showGameList(user);
         },
-        error: function() {
-        // Show the error message somewhere and let the user try again.
+        error: function(user, error) {
+//            $signUpFormAlert.alert();
+            var status = '';
+            status = "Error: " + error.code + " " + error.message;
+            $signUpFormAlert.html(status);
             $signUpFormAlert.show();
         }
     });
-    
-    $usernameInput = $usernameInput2;
 });
 
 $logOut.on('click', function(event) {
@@ -216,14 +219,14 @@ $logOut.on('click', function(event) {
 
 $logIn.on('click', function(event) {
 	event.preventDefault();
+    $signUpForm.hide();
+    $signUpFormAlert.hide();
 	showRegister();
 });
 
 $signUp.on('click', function(event) {
 	event.preventDefault();
-//	Parse.User.logOut();
-	showRegister();
-    $activities.hide();
+    $registerForm.hide();
     $signUpForm.show();
     $signUpFormAlert.hide();
     $logIn.show();
@@ -269,7 +272,6 @@ $flipButton.on('click', function(event) {
     event.preventDefault();
     $board.flip();
 });
-
 
 $(document).on('ready', function() {
 	var currentUser = Parse.User.current();
