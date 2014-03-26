@@ -3,7 +3,11 @@ the web part of Graceful Chess
 
 Made for University of Michigan's EECS 481.
 
-You'll need to run this in a web server.
+Visit the site here:
+
+<http://www-personal.umich.edu/~evanhahn/graceful-beta/>
+
+Or run it in a local web server.
 
 Running an HTTP server with Python 2 (works on Mac OSX and Ubuntu Linux):
 
