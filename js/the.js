@@ -31,6 +31,7 @@ var $opponentName = $('#opponent-name');
 var $backButton = $('#backBtn');
 var $flipButton = $('#flipBtn');
 var $quitButton = $('#quitBtn');
+var $randomButton = $('#random-button');
 
 var $board = null;
 var $statusEl = $('#status');
@@ -87,8 +88,22 @@ function showGame(game) {
 				error: function() {
 					alert('Error making move. Try again!');
 				}
+			
 			});
+			
+			if(oppName === 'Computer') {
+				console.log('lol');
+				window.setTimeout(makeRandomMove(game), 250);
+				game.save(null, {
+					success: $.noop,
+					error: function() {
+						alert('Error making move. Try again!');
+					}
+				});
+			}
             updateStatus(game);
+			
+
 		},
 		onMouseoutSquare: onMouseoutSquare,
 	  	onMouseoverSquare: onMouseoverSquare,
@@ -267,26 +282,39 @@ $newGameModal.on('submit', function(event) {
 	var me = Parse.User.current().get('username');
 	var opponent = $opponentName.val();
 
-  var game = new Games();
-  game.set({
-    gameHistory: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
-    gameStatus: me,
-    player1Name: me,
-    player2Name: opponent
-  });
-
-  game.save(null, {
-    success: function(game) {
-      showGame(game);
-      $newGameModal.modal('hide');
-      $opponentName.val('');
-    },
-    error: function(game, error) {
-      alert('Error starting new game: ' + error.description);
-    }
-  });
+  	createGame(me, opponent);
+	$newGameModal.modal('hide');
 
 });
+
+function createGame(me, opponent){
+	var game = new Games();
+	game.set({
+		gameHistory: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+		gameStatus: me,
+		player1Name: me,
+		player2Name: opponent
+	});
+
+	game.save(null, {
+		success: function(game) {
+		showGame(game);
+		$opponentName.val('');
+	},
+	error: function(game, error) {
+		alert('Error starting new game: ' + error.description);
+		}
+	});
+};
+
+
+$randomButton.on('click', function(event) {
+	event.preventDefault();
+	var me = Parse.User.current().get('username');
+	var opponent = 'Computer';
+	createGame(me, opponent);
+});
+
 
 $backButton.on('click', function(event) {
 	event.preventDefault();
@@ -349,6 +377,15 @@ var onMouseoverSquare = function(square, piece) {
 
 var onMouseoutSquare = function(square, piece) {
   removeGreySquares();
+};
+
+var makeRandomMove = function(game) {
+  	var possibleMoves = game.moves();
+  // game over
+  	if (possibleMoves.length === 0) return;
+	var randomIndex = Math.floor(Math.random() * possibleMoves.length);
+	game.move(possibleMoves[randomIndex]);
+//	$board.position(game.fen());
 };
 
 $(document).on('ready', function() {
