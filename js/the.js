@@ -29,9 +29,11 @@ var $opponentName = $('#opponent-name');
 
 var $backButton = $('#backBtn');
 var $flipButton = $('#flipBtn');
+var $quitButton = $('#quitBtn');
 
 var $board = null;
 var $statusEl = $('#status');
+var $game = null;
 
 function showRegister() {
 	console.assert(!Parse.User.current());
@@ -47,9 +49,17 @@ function showRegister() {
 }
 
 function showGame(game) {
+	$game = game;
 	$activities.hide();
 	$boardActivity.show();
     updateStatus(game);
+	
+	if (game.isOver()){
+		$quitButton.hide();
+	}
+	else {
+		$quitButton.show();
+	}
     
 	$board = new ChessBoard('board', {
 		position: game.get('gameHistory'),
@@ -131,6 +141,15 @@ function showGameList(user) {
 		}
 	});
 
+}
+
+function deleteGame(game){
+	game.destroy({
+		success: function(game){
+		},
+		error: function(game, error){
+		}
+	});
 }
 
 function updateStatus(game) {
@@ -271,6 +290,21 @@ $backButton.on('click', function(event) {
 $flipButton.on('click', function(event) {
     event.preventDefault();
     $board.flip();
+});
+
+$quitButton.on('click', function(event) {
+    event.preventDefault();
+	$game.destroy({
+		success: function(game){
+			var currentUser = Parse.User.current();
+			showGameList(currentUser);
+		},
+		error: function(game, error){
+			var currentUser = Parse.User.current();
+			showGameList(currentUser);
+		}
+	});
+	
 });
 
 $(document).on('ready', function() {
