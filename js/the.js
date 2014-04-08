@@ -85,6 +85,8 @@ function showGame(game) {
 			});
             updateStatus(game);
 		},
+		onMouseoutSquare: onMouseoutSquare,
+	  	onMouseoverSquare: onMouseoverSquare,
 		onSnapEnd: function() {
 			$board.position(game.get('gameHistory'));
 		}
@@ -306,6 +308,43 @@ $quitButton.on('click', function(event) {
 	});
 	
 });
+
+//Chess board grey square
+var removeGreySquares = function() {
+  $('#board .square-55d63').css('background', '');
+};
+
+var greySquare = function(square) {
+  var squareEl = $('#board .square-' + square);
+  
+  var background = '#a9a9a9';
+  if (squareEl.hasClass('black-3c85d') === true) {
+    background = '#696969';
+  }
+
+  squareEl.css('background', background);
+};
+
+
+var onMouseoverSquare = function(square, piece) {
+  // get list of possible moves for this square
+	var moves = $game.moves(square);
+
+	// exit if there are no moves available for this square
+	if (moves.length === 0) return;
+
+	// highlight the square they moused over
+	greySquare(square);
+
+	// highlight the possible squares for this piece
+	for (var i = 0; i < moves.length; i++) {
+	greySquare(moves[i].to);
+	}
+};
+
+var onMouseoutSquare = function(square, piece) {
+  removeGreySquares();
+};
 
 $(document).on('ready', function() {
 	var currentUser = Parse.User.current();

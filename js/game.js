@@ -39,6 +39,15 @@ var Games = Parse.Object.extend('Games', {
 			}
 		}
 		return result;
+	},
+	
+	moves: function(square){
+		var chessJSGame = new Chess(this.get('gameHistory'));
+		var result = chessJSGame.moves({
+			square: square,
+    		verbose: true
+		});
+		return result;
 	}
 
 });
