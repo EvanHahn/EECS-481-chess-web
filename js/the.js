@@ -23,6 +23,7 @@ var $theirTurnGamesList = $('#their-turn-games');
 var $finishedGamesList = $('#finished-games');
 
 var $boardActivity = $('#board-activity');
+var $boardTitle = $('#board-title');
 
 var $newGameModal = $('.newgame.modal');
 var $opponentName = $('#opponent-name');
@@ -53,6 +54,10 @@ function showGame(game) {
 	$activities.hide();
 	$boardActivity.show();
     updateStatus(game);
+	var yourName = game.myName();
+	var oppName = game.otherPlayerName();
+	var titleStatus = yourName + ' vs. ' + oppName;
+	$boardTitle.html(titleStatus);
 	
 	if (game.isOver()){
 		$quitButton.hide();
@@ -158,7 +163,7 @@ function updateStatus(game) {
     var status = '';
     var playerName = '';
     if (game.isMyTurn() === true) {
-        playerName = Parse.User.current().get('username');
+        playerName = game.myName();
       }
     else {
         playerName = game.otherPlayerName();

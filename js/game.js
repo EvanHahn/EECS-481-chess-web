@@ -12,7 +12,9 @@ var Games = Parse.Object.extend('Games', {
 		else
 			return this.get('player1Name');
 	},
-
+	myName: function(){
+		return Parse.User.current().get('username');
+	},
 	isMyTurn: function() {
 		var me = Parse.User.current();
 		console.assert(me);
