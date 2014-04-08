@@ -184,26 +184,29 @@ function updateStatus(game) {
         playerName = game.otherPlayerName();
     }
     
-      // checkmate?
-//      if (game.in_checkmate() === true) {
-//        status = 'Game over, ' + playerName + ' is in checkmate.';
-//      }
-//      // draw?
-//      else if (game.in_draw() === true) {
-//        status = 'Game over, drawn position';
-//      }
-//      // game still on
-//      else {
-//        status = playerName + ' to move';
-//        // check?
-//        if (game.in_check() === true) {
-//          status += ', ' + playerName + ' is in check';
-//        }
-//      }
     status = 'It is ' + playerName + '\'s turn to move';
+	
+	// checkmate?
+      if (game.in_checkmate() === true) {
+		  status = 'Game over, ' + playerName + ' is in checkmate.';
+		  $quitButton.hide();
+      }
+      // draw?
+      else if (game.in_draw() === true) {
+		  status = 'Game over, drawn position';
+		  $quitButton.hide();
+      }
+      // game still on
+      else {
+        status = playerName + ' to move';
+        // check?
+        if (game.in_check() === true) {
+          status += ', ' + playerName + ' is in check';
+        }
+      }
     
     if (game.isOver() === true){
-        status = 'Game is over'
+//        status = 'Game is over'
     }
     
     $statusEl.html(status);
@@ -366,7 +369,7 @@ var onMouseoverSquare = function(square, piece) {
 	// exit if there are no moves available for this square
 	if (moves.length === 0) return;
 
-	// highlight the square they moused over
+	// highlight t	he square they moused over
 	greySquare(square);
 
 	// highlight the possible squares for this piece

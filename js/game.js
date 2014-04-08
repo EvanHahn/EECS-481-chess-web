@@ -61,6 +61,18 @@ var Games = Parse.Object.extend('Games', {
 	fen: function () {
 		var chessJSGame = new Chess(this.get('gameHistory'));
 		return chessJSGame.fen();
+	},
+	in_checkmate: function() {
+		var chessJSGame = new Chess(this.get('gameHistory'));
+		return chessJSGame.in_checkmate();
+	},
+	in_draw: function() {
+		var chessJSGame = new Chess(this.get('gameHistory'));
+		return chessJSGame.in_draw();
+	},
+	in_check: function() {
+		var chessJSGame = new Chess(this.get('gameHistory'));
+		return chessJSGame.in_check();
 	}
 
 });
