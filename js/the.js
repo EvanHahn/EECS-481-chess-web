@@ -282,10 +282,15 @@ $newGameModal.on('submit', function(event) {
 
 	event.preventDefault();
 
-	var me = Parse.User.current().get('username');
-	var opponent = $opponentName.val();
+	var me = Parse.User.current().get('username').toLowerCase();
+	var opponent = $opponentName.val().toLowerCase();
 
-  	createGame(me, opponent);
+	if (me == opponent) {
+		$opponentName.parent().addClass('has-error');
+		return;
+	}
+
+	createGame(me, opponent);
 	$newGameModal.modal('hide');
 
 });
