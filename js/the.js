@@ -290,8 +290,24 @@ $newGameModal.on('submit', function(event) {
 		return;
 	}
 
-	createGame(me, opponent);
-	$newGameModal.modal('hide');
+	var userCheck = new Parse.Query('User');
+	userCheck.equalTo('username', opponent);
+	userCheck.find({
+
+		success: function (users) {
+			if (users.length) {
+				createGame(me, opponent);
+				$newGameModal.modal('hide');
+			} else {
+				$opponentName.parent().addClass('has-error');
+			}
+		},
+
+		error: function () {
+			$opponentName.parent().addClass('has-error');
+		}
+
+	});
 
 });
 
