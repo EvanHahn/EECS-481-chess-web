@@ -59,14 +59,14 @@ function showGame(game) {
 	var oppName = game.otherPlayerName();
 	var titleStatus = yourName + ' vs. ' + oppName;
 	$boardTitle.html(titleStatus);
-	
+
 	if (game.isOver()){
 		$quitButton.hide();
 	}
 	else {
 		$quitButton.show();
 	}
-    
+
 	$board = new ChessBoard('board', {
 		position: game.get('gameHistory'),
 		draggable: game.isMyTurn(),
@@ -88,9 +88,9 @@ function showGame(game) {
 				error: function() {
 					alert('Error making move. Try again!');
 				}
-			
+
 			});
-			
+
 			if(oppName === 'Computer') {
 				console.log('lol');
 				window.setTimeout(makeRandomMove(game), 250);
@@ -102,7 +102,7 @@ function showGame(game) {
 				});
 			}
             updateStatus(game);
-			
+
 
 		},
 		onMouseoutSquare: onMouseoutSquare,
@@ -183,9 +183,9 @@ function updateStatus(game) {
     else {
         playerName = game.otherPlayerName();
     }
-    
+
     status = 'It is ' + playerName + '\'s turn to move';
-	
+
 	// checkmate?
       if (game.in_checkmate() === true) {
 		  status = 'Game over, ' + playerName + ' is in checkmate.';
@@ -204,11 +204,11 @@ function updateStatus(game) {
           status += ', ' + playerName + ' is in check';
         }
       }
-    
+
     if (game.isOver() === true){
 //        status = 'Game is over'
     }
-    
+
     $statusEl.html(status);
 }
 
@@ -227,7 +227,7 @@ $registerForm.on('submit', function(event) {
             status = "Error: " + error.code + " " + error.message;
             $registerFormAlert.html(status);
 			$registerFormAlert.show();
-            
+
 		}
 	});
 });
@@ -342,7 +342,7 @@ $quitButton.on('click', function(event) {
 			showGameList(currentUser);
 		}
 	});
-	
+
 });
 
 //Chess board grey square
@@ -352,7 +352,7 @@ var removeGreySquares = function() {
 
 var greySquare = function(square) {
   var squareEl = $('#board .square-' + square);
-  
+
   var background = '#a9a9a9';
   if (squareEl.hasClass('black-3c85d') === true) {
     background = '#696969';
@@ -392,6 +392,7 @@ var makeRandomMove = function(game) {
 };
 
 $(document).on('ready', function() {
+  $logOut.removeClass('hide');
 	var currentUser = Parse.User.current();
 	if (currentUser)
 		showGameList(currentUser);

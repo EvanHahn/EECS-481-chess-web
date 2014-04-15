@@ -16,20 +16,18 @@
 <body class="container">
 
 	<div class="page-header">
-  	<a href="#" id="log-out" class="pull-right">Log Out</a>
-    <a href="#" id="sign-up" class="pull-right">Sign Up</a>
-    <a href="#" id="log-in" class="pull-right">Log In</a>
+  	<a href="#" id="log-out" class="pull-right hide">Log Out</a>
   	<h1>Graceful Chess &#9813;</h1>
 	</div>
-    
+
 	<form id="register-form" action="none" class="activity">
 
 		<div class="alert alert-danger">Failed to log in! Invalid Username/Password combination.</div>
-        
+
 		<div class="form-group">
 			<input name="username" required class="form-control" placeholder="Username">
 		</div>
-        
+
 		<div class="form-group">
 			<input name="password" required type="password" class="form-control" placeholder="Password">
 		</div>
@@ -56,7 +54,7 @@
 	</form>
 
 	<div id="game-list" class="activity">
-        
+
 		<button data-toggle="modal" data-target=".newgame.modal" id="new-game-button" class="btn btn-primary">New game</button>
 		<button id="random-button" class="btn btn-primary">Play Random Computer</button>
 
