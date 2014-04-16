@@ -73,6 +73,22 @@ var Games = Parse.Object.extend('Games', {
 	in_check: function() {
 		var chessJSGame = new Chess(this.get('gameHistory'));
 		return chessJSGame.in_check();
+	},
+	moveColor: function(){
+		var chessJSGame = new Chess(this.get('gameHistory'));
+		if (chessJSGame.turn() === 'b' && this.isMyTurn()){
+			return 'black';
+		}
+		else if (chessJSGame.turn() === 'b' && !this.isMyTurn()){
+			return 'white';
+		}
+		else if (chessJSGame.turn() === 'w' && this.isMyTurn()){
+			return 'white';
+		}
+		else if (chessJSGame.turn() === 'w' && !this.isMyTurn()){
+			return 'black';
+		}
 	}
+	
 
 });

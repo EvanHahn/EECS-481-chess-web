@@ -58,7 +58,8 @@ function showGame(game) {
     updateStatus(game);
 	var yourName = game.myName();
 	var oppName = game.otherPlayerName();
-	var titleStatus = yourName + ' vs. ' + oppName;
+	var color = game.moveColor();
+	var titleStatus = yourName + ' vs. ' + oppName + ' (you are ' + color + ')';
 	$boardTitle.html(titleStatus);
 
 	if (game.isOver()){
