@@ -121,9 +121,9 @@ function showGameList(user) {
 	$gameList.show();
     $signUp.hide();
     $logIn.hide();
-	
+
 	var username = user.get('username');
-	
+
 	$usernameTitle.html('Username: ' + username);
 	$usernameTitle.show();
 
@@ -131,7 +131,7 @@ function showGameList(user) {
 	$theirTurnGamesList.html('');
 	$finishedGamesList.html('');
 
-	
+
 
 	var player1Query = new Parse.Query('Games');
 	player1Query.equalTo('player1Name', username);
@@ -421,7 +421,9 @@ var makeRandomMove = function(game) {
 };
 
 $(document).on('ready', function() {
-  	$logOut.removeClass('hide');
+	$signUp.removeClass('hide');
+	$logIn.removeClass('hide');
+	$logOut.removeClass('hide');
 	var currentUser = Parse.User.current();
 	if (currentUser)
 		showGameList(currentUser);
