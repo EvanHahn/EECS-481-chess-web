@@ -6,6 +6,7 @@ var $activities = $('.activity');
 var $logOut = $('#log-out');
 var $signUp = $('#sign-up');
 var $logIn = $('#log-in');
+var $usernameTitle = $('#username-title');
 
 var $registerForm = $('#register-form');
 var $registerFormAlert = $('.alert', $registerForm);
@@ -120,12 +121,17 @@ function showGameList(user) {
 	$gameList.show();
     $signUp.hide();
     $logIn.hide();
+	
+	var username = user.get('username');
+	
+	$usernameTitle.html('Username: ' + username);
+	$usernameTitle.show();
 
 	$yourTurnGamesList.html('');
 	$theirTurnGamesList.html('');
 	$finishedGamesList.html('');
 
-	var username = user.get('username');
+	
 
 	var player1Query = new Parse.Query('Games');
 	player1Query.equalTo('player1Name', username);
@@ -220,6 +226,8 @@ $registerForm.on('submit', function(event) {
 
 	Parse.User.logIn(username, password, {
 		success: function(user) {
+			var stuff = 'Username: ' + username;
+			$usernameTitle.html(stuff);
 			showGameList(user);
 		},
 		error: function(user, error) {
@@ -227,7 +235,6 @@ $registerForm.on('submit', function(event) {
             status = "Error: " + error.code + " " + error.message;
             $registerFormAlert.html(status);
 			$registerFormAlert.show();
-
 		}
 	});
 });
@@ -258,6 +265,7 @@ $signUpForm.on('submit', function(event) {
 $logOut.on('click', function(event) {
 	event.preventDefault();
 	Parse.User.logOut();
+	$usernameTitle.hide();
 	showRegister();
 });
 
@@ -413,7 +421,7 @@ var makeRandomMove = function(game) {
 };
 
 $(document).on('ready', function() {
-  $logOut.removeClass('hide');
+  	$logOut.removeClass('hide');
 	var currentUser = Parse.User.current();
 	if (currentUser)
 		showGameList(currentUser);
