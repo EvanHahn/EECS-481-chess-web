@@ -72,8 +72,11 @@ function showGame(game) {
 	$board = new ChessBoard('board', {
 		position: game.get('gameHistory'),
 		draggable: game.isMyTurn(),
-		onDragStart: function() {
-			if (game.isOver() || !game.isMyTurn())
+		onDragStart: function(source, piece, position, orientation) {
+			var squareColorMismatch = false;
+			if((game.myColor() === 'white' && piece.search(/^w/) === -1) || (game.myColor() === 'black' && piece.search(/^b/) === -1))
+				squareColorMismatch = true;
+			if (game.isOver() || !game.isMyTurn() || squareColorMismatch)
 				return false;
 		},
 		onDrop: function(source, target) {
@@ -114,6 +117,9 @@ function showGame(game) {
 		}
 	});
 
+	if(game.myColor() === 'black') {
+		$board.flip();
+	}
 }
 
 function showGameList(user) {

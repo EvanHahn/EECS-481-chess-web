@@ -88,7 +88,16 @@ var Games = Parse.Object.extend('Games', {
 		else if (chessJSGame.turn() === 'w' && !this.isMyTurn()){
 			return 'black';
 		}
+	},
+	myColor: function() {
+		var me = Parse.User.current();
+		console.assert(me);
+		var myName = me.get('username');
+		if (this.get('player1Name') == myName)
+			return 'white';
+		else
+			return 'black';
+
 	}
-	
 
 });
