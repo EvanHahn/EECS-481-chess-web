@@ -38,7 +38,7 @@
 			<input name="password" required type="password" class="form-control" placeholder="Password">
 		</div>
 		<div class="form-group">
-			<input value="Log In" type="submit" class="btn btn-default">
+			<input value="Log In" type="submit" class="btn btn-primary">
 		</div>
 
 	</form>
@@ -59,31 +59,105 @@
 
 	</form>
 
-	<div id="game-list" class="activity">
+	<div id="game-list" class="activity container-fluid">
 
-		<button data-toggle="modal" data-target=".newgame.modal" id="new-game-button" class="btn btn-primary">New game</button>
-		<button id="random-button" class="btn btn-primary">Play Random Computer</button>
+		<button data-toggle="modal" data-target=".newgame.modal" id="new-game-button" class="btn btn-primary">New Game</button>
+		<button id="random-button" class="btn btn-primary">Play Computer</button>
 
-		<h3>Your turn games</h3>
-		<ul id="your-turn-games"></ul>
+		<div class="row">
+			<div class="col-md-4">
+				<h3>Your turn</h3>
+				<h5>Opponent's name:</h5>
+				<ul id="your-turn-games"></ul>
+			</div>
 
-		<h3>Their turn games</h3>
-		<ul id="their-turn-games"></ul>
+			<div class="col-md-4">
+				<h3>Opponent's turn</h3>
+				<h5>Opponent's name:</h5>
+				<ul id="their-turn-games"></ul>
+			</div>
 
-		<h3>Finished games</h3>
-		<ul id="finished-games"></ul>
+			<div class="col-md-4">
+				<h3>Finished games</h3>
+				<h5>Opponent's name:</h5>
+				<ul id="finished-games"></ul>
+			</div>
+		</div>
 
+		</br>
+		</br>
+
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<h1>How to Play</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-7 col-md-offset-2">
+				For general chess rules and gameplay instructions, please refer to
+				<a href="http://www.chess.com/learn-how-to-play-chess">How to Play Chess</a> or
+				<a href="http://en.wikipedia.org/wiki/Chess">Wikipedia</a>.
+			</div>
+			</br>
+			</br>
+			</br>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5">
+				<img src="img/screen1.png"/>
+				</br>
+				<ul>
+					<li>Pieces with legal moves will be indicated by a yellow box.</li>
+					<li>To make a move, click and drag a piece to a new square.</li>
+					<li>Legal moves will be indicated by grey squares on the board.</li>
+				</ul>
+			</div>
+
+			<div class="col-md-5 col-md-offset-1">
+				<img src="img/screen2.png"/>
+				</br>
+				<ul>
+					<li>A game is over when one player takes the other player's King,
+					forces the other into a checkmate, or there is a draw.</li>
+					<li>The status below the board will update when the game ends, indicating how victory was reached.</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 	<div id="board-activity" class="activity">
 		<h2 id="board-title">Player vs. Player</h2>
 		<div id="board"></div>
         <p>Status: <span id="status"></span></p>
-        <input type="button" id="backBtn" value="Back to Game List" class="btn btn-primary">
+        <input type="button" id="backBtn" value="Back to Home" class="btn btn-primary">
         <input type="button" id="flipBtn" value="Flip Board" class="btn btn-primary">
 		<!--need to be implemented-->
-		<input type="button" id="quitBtn" value="Quit Game" class="btn btn-primary">
+		<button data-toggle="modal" data-target=".quitgame.modal" id="quit-game-button" class="btn btn-primary">Quit game</button>
 	</div>
+
+	<form class="quitgame modal fade" tabindex="-1">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Quit Game</h4>
+				</div>
+
+				<div class="modal-body form-group">
+				Are you sure you want to quit this game?
+				</div>
+
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" value="Yes">
+					<button class="btn btn-primary" data-dismiss="modal">No</button>
+				</div>
+
+			</div>
+		</div>
+	</form>
 
 	<form class="newgame modal fade"  tabindex="-1">
 		<div class="modal-dialog">

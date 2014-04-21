@@ -29,6 +29,8 @@ var $boardTitle = $('#board-title');
 var $newGameModal = $('.newgame.modal');
 var $opponentName = $('#opponent-name');
 
+var $quitGameModal = $('.quitgame.modal');
+
 var $backButton = $('#backBtn');
 var $flipButton = $('#flipBtn');
 var $quitButton = $('#quitBtn');
@@ -152,7 +154,7 @@ function showGameList(user) {
 
 				var $bullet = $('<li></li>');
 				var $link = $('<a href="#"></a>');
-				$link.text('Versus ' + game.otherPlayerName());
+				$link.text(game.otherPlayerName());
 				$link.on('click', function(event) {
 					event.preventDefault();
 					showGame(game);
@@ -326,6 +328,27 @@ $newGameModal.on('submit', function(event) {
 
 });
 
+$quitGameModal.on('submit', function(event) {
+
+   event.preventDefault();
+
+   $game.destroy({
+      success: function(game){
+         var currentUser = Parse.User.current();
+         showGameList(currentUser);
+         $quitGameModal.modal('hide');
+      },
+      error: function(game, error){
+         var currentUser = Parse.User.current();
+         showGameList(currentUser);
+         $quitGameModal.modal('hide');
+      }
+   });
+
+});
+
+
+
 function createGame(me, opponent){
 	var game = new Games();
 	game.set({
@@ -345,7 +368,6 @@ function createGame(me, opponent){
 		}
 	});
 };
-
 
 $randomButton.on('click', function(event) {
 	event.preventDefault();
