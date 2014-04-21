@@ -63,6 +63,7 @@
 
 		<button data-toggle="modal" data-target=".newgame.modal" id="new-game-button" class="btn btn-primary">New Game</button>
 		<button id="random-button" class="btn btn-primary">Play Computer</button>
+		<button id="tutorial-button" class="btn btn-primary pull-right">How to play&#8230;</button>
 
 		<div class="row">
 			<div class="col-md-4">
@@ -83,10 +84,10 @@
 				<ul id="finished-games"></ul>
 			</div>
 		</div>
+	</div>
 
-		</br>
-		</br>
-
+	<div id="tutorial" class="activity container-fluid">
+		<button class="btn btn-primary back">Back to Home</button>
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 				<h1>How to Play</h1>
@@ -131,7 +132,7 @@
 		<h2 id="board-title">Player vs. Player</h2>
 		<div id="board"></div>
         <p>Status: <span id="status"></span></p>
-        <input type="button" id="backBtn" value="Back to Home" class="btn btn-primary">
+        <input type="button" value="Back to Home" class="btn btn-primary back">
         <input type="button" id="flipBtn" value="Flip Board" class="btn btn-primary">
 		<!--need to be implemented-->
 		<button data-toggle="modal" data-target=".quitgame.modal" id="quit-game-button" class="btn btn-primary">Quit game</button>
@@ -147,7 +148,7 @@
 				</div>
 
 				<div class="modal-body form-group">
-				Are you sure you want to quit this game?
+					Are you sure you want to quit this game?
 				</div>
 
 				<div class="modal-footer">

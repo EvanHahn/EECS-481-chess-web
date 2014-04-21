@@ -31,6 +31,9 @@ var $opponentName = $('#opponent-name');
 
 var $quitGameModal = $('.quitgame.modal');
 
+var $tutorialActivity = $('#tutorial');
+var $tutorialButton = $('#tutorial-button');
+
 var $backButton = $('#backBtn');
 var $flipButton = $('#flipBtn');
 var $quitButton = $('#quitBtn');
@@ -39,6 +42,12 @@ var $randomButton = $('#random-button');
 var $board = null;
 var $statusEl = $('#status');
 var $game = null;
+
+$('.back').on('click', function(event) {
+   event.preventDefault();
+   var currentUser = Parse.User.current();
+   showGameList(currentUser);
+});
 
 function showRegister() {
 	console.assert(!Parse.User.current());
@@ -376,6 +385,12 @@ $randomButton.on('click', function(event) {
 	createGame(me, opponent);
 });
 
+$tutorialButton.on('click', function(event) {
+   event.preventDefault();
+
+   $activities.hide();
+   $tutorialActivity.show();
+});
 
 $backButton.on('click', function(event) {
 	event.preventDefault();
