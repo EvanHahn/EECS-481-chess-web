@@ -5,7 +5,7 @@ Made for University of Michigan's EECS 481.
 
 Visit the site here:
 
-<http://www-personal.umich.edu/~evanhahn/graceful-beta/>
+<http://www-personal.umich.edu/~evanhahn/graceful-web/>
 
 Or run it in a local web server.
 
